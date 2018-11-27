@@ -41,6 +41,28 @@ services:
     volumes:
       - .:/usr/src/app
 
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: rake jobs:work
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres@db/askdarcel_development
+      TEST_DATABASE_URL: postgres://postgres@db/askdarcel_test
+      ALGOLIA_APPLICATION_ID:
+      ALGOLIA_API_KEY:
+      ALGOLIA_INDEX_PREFIX:
+    networks:
+      - askdarcel
+    volumes:
+      - .:/usr/src/app
+      # Avoid leftover server.pid files when container exits.
+      # https://auth0.com/blog/ruby-on-rails-killer-workflow-with-docker-part-1/
+      - type: tmpfs
+        target: /usr/src/app/tmp/pids
+
 networks:
   # Used to connect to askdarcel-web in a different docker-compose instance
   askdarcel:

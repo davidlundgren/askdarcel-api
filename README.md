@@ -36,6 +36,9 @@ $ docker-compose build
 # Start the database container (in the background with -d)
 $ docker-compose up -d db
 
+# Start the worker container (in the background with -d)
+$ docker-compose up -d worker
+
 # Generate random database fixtures
 $ docker-compose run --rm api rake db:setup db:populate
 
@@ -111,7 +114,13 @@ After cloning the repository and `cd`ing into the workspace:
   Alternatively, you can generate random fixtures:
   - `rake db:setup db:populate`
 
-6. Run the development server.
+6. (Optional) Run the background job worker.
+  - To run a worker to continuously process background jobs:
+    - `rake jobs:work`
+  - To run a worker to process all existing background jobs and exit:
+    - `rake jobs:workoff`
+
+7. Run the development server.
   - `rails s -b 0.0.0.0`
-7. Do NOT do sudo install -rails
+8. Do NOT do sudo install -rails
 

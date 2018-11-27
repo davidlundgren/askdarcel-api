@@ -31,6 +31,11 @@ gem 'lograge'
 
 gem 'prometheus-client'
 
+# Background Job Processing
+gem 'daemons'
+gem 'delayed_job_active_record'
+gem 'whenever', require: false
+
 group :production do
   gem 'activerecord-nulldb-adapter'
 end
