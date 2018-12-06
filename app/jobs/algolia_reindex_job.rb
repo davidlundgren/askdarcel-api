@@ -18,7 +18,9 @@ class AlgoliaReindexJob
   end
 
   def perform
-    Resource.reindex
-    Service.reindex
+    Resource.where(status: :approved).reindex
+    # Since Service and Resource share an algolia index, we use `reindex!` so
+    # Service reindexing does not clear out Resource index records.
+    Service.where(status: :approved).reindex!
   end
 end
