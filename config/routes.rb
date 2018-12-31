@@ -7,7 +7,11 @@ Rails.application.routes.draw do
       get :counts
     end
   end
-  resources :eligibilities
+  resources :eligibilities do
+    collection do
+      get :featured
+    end
+  end
   resources :resources do
     resources :notes, only: :create
     collection do
